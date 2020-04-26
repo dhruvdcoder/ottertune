@@ -13,5 +13,6 @@ setup(
     install_requires=install_requires,
     
     #package_dir={"": "server"},   # tell distutils packages are under src
-    include_package_data=True,    # include everything in source control
-    python_requires='>=3.6')
+    
+    
+    zip_safe=False)
