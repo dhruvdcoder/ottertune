@@ -15,12 +15,12 @@ from scipy.spatial.distance import cdist
 from sklearn.metrics import silhouette_score
 from sklearn.cluster import KMeans as SklearnKMeans
 from celery.utils.log import get_task_logger
-
+import logging
 from .base import ModelBase
 
 # Log debug messages
 LOGGER = get_task_logger(__name__)
-
+logger = logging.getLogger(__name__)
 
 class KMeans(ModelBase):
     """
@@ -258,6 +258,7 @@ class KMeansClusters(ModelBase):
             sample_labels = ["sample_{}".format(i) for i in range(X.shape[1])]
         self.sample_labels_ = sample_labels
         for K in range(self.min_cluster_, self.max_cluster_ + 1):
+            logger.info(f"num clusters: {K}")
             tmp = KMeans().fit(X, K, self.sample_labels_, estimator_params)
             if tmp is None:  # Set maximum cluster
                 assert K > min_cluster, "min_cluster is too large for the model"
